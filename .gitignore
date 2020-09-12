@@ -1,3 +1,4 @@
-mklink/bin/
-mklink/obj/
-build/
+bin/
+obj/
+.vscode/
+release/

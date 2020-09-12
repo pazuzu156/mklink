@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+  <PropertyGroup>
+    <Version>1.1</Version>
+    <Authors>Kaleb Klein</Authors>
+    <Company>Kaleb Klein</Company>
+    <NeutralLanguage>en-US</NeutralLanguage>
+    <AssemblyTitle>MKLink</AssemblyTitle>
+    <Description>A GUI front-end for Windows' built in mklink command</Description>
+    <Copyright>2015-2020 Kaleb Klein</Copyright>
+    <OutputType>WinExe</OutputType>
+    <TargetFrameworks>netcoreapp3.1;net46</TargetFrameworks>
+    <RuntimeIdentifier>win-x86</RuntimeIdentifier>
+    <UseWPF>true</UseWPF>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+  </PropertyGroup>
+  <ItemGroup>
+    <Resource Include="uac-icon.png" />
+  </ItemGroup>
+</Project>
