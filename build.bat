@@ -12,12 +12,27 @@ if "%1" NEQ "" (
 
 :build
 rem build for net46, then for netcoreapp3.1
-call dotnet publish -f net46 -c Release -v d
-if not exist Release\net46 mkdir Release\net46
-copy bin\Release\net46\win-x86\publish\mklink.exe Release\net46\mklink.exe
-call dotnet publish -f netcoreapp3.1 -c Release /p:PublishSingleFile=True /p:PublishTrimmed=True -v d
-if not exist Release\netcoreapp3.1 mkdir Release\netcoreapp3.1
-copy bin\Release\netcoreapp3.1\win-x86\publish\mklink.exe Release\netcoreapp3.1\mklink.exe
+rem start x86 then x64 after
+
+rem x86 net46
+call dotnet publish -f net46 -c Release -v d -r win-x86
+if not exist "%PWD%\Release\net46\win-x86" mkdir "%PWD%\Release\net46\win-x86"
+copy "%PWD%\bin\Release\net46\win-x86\publish\mklink.exe" "%PWD%\Release\net46\win-x86\mklink.exe"
+
+rem x64 net46
+call dotnet publish -f net46 -c Release -v d -r win-x64
+if not exist "%PWD%\Release\net46\win-x64" mkdir "%PWD%\Release\net46\win-x64"
+copy "%PWD%\bin\Release\net46\win-x64\publish\mklink.exe" "%PWD%\Release\net46\win-x64\mklink.exe"
+
+rem x86 netcoreapp3.1
+call dotnet publish -f netcoreapp3.1 -c Release -v d -r win-x86 /p:PublishSingleFile=True /p:PublishTrimmed=True
+if not exist "%PWD%\Release\netcoreapp3.1\win-x86" mkdir "%PWD%\Release\netcoreapp3.1\win-x86"
+copy "%PWD%\bin\Release\netcoreapp3.1\win-x86\publish\mklink.exe" "%PWD%\Release\netcoreapp3.1\win-x86\mklink.exe"
+
+rem x64 netcoreapp3.1
+call dotnet publish -f netcoreapp3.1 -c Release -v d -r win-x64 /p:PublishSingleFile=True /p:PublishTrimmed=True
+if not exist "%PWD%\Release\netcoreapp3.1\win-x64" mkdir "%PWD%\Release\netcoreapp3.1\win-x64"
+copy "%PWD%\bin\Release\netcoreapp3.1\win-x64\publish\mklink.exe" "%PWD%\Release\netcoreapp3.1\win-x64\mklink.exe"
 echo build complete
 goto end
 

@@ -9,7 +9,7 @@
     <Copyright>2015-2020 Kaleb Klein</Copyright>
     <OutputType>WinExe</OutputType>
     <TargetFrameworks>netcoreapp3.1;net46</TargetFrameworks>
-    <RuntimeIdentifier>win-x86</RuntimeIdentifier>
+    <RuntimeIdentifiers>win-x86;win-x64</RuntimeIdentifiers>
     <UseWPF>true</UseWPF>
     <UseWindowsForms>true</UseWindowsForms>
     <ApplicationManifest>app.manifest</ApplicationManifest>
