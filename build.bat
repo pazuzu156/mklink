@@ -2,12 +2,14 @@
 title MKLink Build Script
 
 set PWD=%~dp0
+set DIST="false"
 
-if "%1" NEQ "" (
-  if "%1" EQU "-c" goto clean
-  if "%1" EQU "-d" goto restore
-  if "%1" EQU "-h" goto help
-  if "%1" EQU "-r" goto run
+if "%1" neq "" (
+  if "%1" equ "-c" goto clean
+  if "%1" equ "-d" goto restore
+  if "%1" equ "-h" goto help
+  if "%1" equ "-r" goto run
+  if "%1" equ "--dist" set DIST="true"
 )
 
 :build
@@ -19,20 +21,25 @@ call dotnet publish -f net46 -c Release -v d -r win-x86
 if not exist "%PWD%\Release\net46\win-x86" mkdir "%PWD%\Release\net46\win-x86"
 copy "%PWD%\bin\Release\net46\win-x86\publish\mklink.exe" "%PWD%\Release\net46\win-x86\mklink.exe"
 
-rem x64 net46
-call dotnet publish -f net46 -c Release -v d -r win-x64
-if not exist "%PWD%\Release\net46\win-x64" mkdir "%PWD%\Release\net46\win-x64"
-copy "%PWD%\bin\Release\net46\win-x64\publish\mklink.exe" "%PWD%\Release\net46\win-x64\mklink.exe"
+if "%DIST%" equ "false" (
+  rem x64 net46
+  call dotnet publish -f net46 -c Release -v d -r win-x64
+  if not exist "%PWD%\Release\net46\win-x64" mkdir "%PWD%\Release\net46\win-x64"
+  copy "%PWD%\bin\Release\net46\win-x64\publish\mklink.exe" "%PWD%\Release\net46\win-x64\mklink.exe"
+)
 
 rem x86 netcoreapp3.1
 call dotnet publish -f netcoreapp3.1 -c Release -v d -r win-x86 /p:PublishSingleFile=True /p:PublishTrimmed=True
 if not exist "%PWD%\Release\netcoreapp3.1\win-x86" mkdir "%PWD%\Release\netcoreapp3.1\win-x86"
 copy "%PWD%\bin\Release\netcoreapp3.1\win-x86\publish\mklink.exe" "%PWD%\Release\netcoreapp3.1\win-x86\mklink.exe"
 
-rem x64 netcoreapp3.1
-call dotnet publish -f netcoreapp3.1 -c Release -v d -r win-x64 /p:PublishSingleFile=True /p:PublishTrimmed=True
-if not exist "%PWD%\Release\netcoreapp3.1\win-x64" mkdir "%PWD%\Release\netcoreapp3.1\win-x64"
-copy "%PWD%\bin\Release\netcoreapp3.1\win-x64\publish\mklink.exe" "%PWD%\Release\netcoreapp3.1\win-x64\mklink.exe"
+if "%DIST%" equ "false" (
+  rem x64 netcoreapp3.1
+  call dotnet publish -f netcoreapp3.1 -c Release -v d -r win-x64 /p:PublishSingleFile=True /p:PublishTrimmed=True
+  if not exist "%PWD%\Release\netcoreapp3.1\win-x64" mkdir "%PWD%\Release\netcoreapp3.1\win-x64"
+  copy "%PWD%\bin\Release\netcoreapp3.1\win-x64\publish\mklink.exe" "%PWD%\Release\netcoreapp3.1\win-x64\mklink.exe"
+)
+
 echo build complete
 goto end
 
